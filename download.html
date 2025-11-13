@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cahayo Techlinks | Downloads</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">Cahayo <span>Techlinks</span></div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="account.html">My Account</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="register.html">Student Registration</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <button
+        id="themeToggle"
+        class="theme-toggle"
+        title="Toggle Dark/Light Mode"
+      >
+        🌙
+      </button>
+    </header>
+
+    <section class="downloads-section">
+      <h2>Download Resources</h2>
+      <div id="downloadList" class="download-list">
+        <!-- Access-controlled documents will appear here -->
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Cahayo Techlinks. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+      // Check if student is registered
+      const students = JSON.parse(localStorage.getItem("students")) || [];
+      const downloadList = document.getElementById("downloadList");
+
+      if (students.length === 0) {
+        downloadList.innerHTML =
+          "<p>You must register as a student to access downloads.</p>";
+      } else {
+        // Sample downloadable documents
+        const documents = [
+          { name: "Web Development Notes", file: "docs/web-development.pdf" },
+          { name: "Data Analysis Guide", file: "docs/data-analysis.pdf" },
+          { name: "Cyber Security Handbook", file: "docs/cyber-security.pdf" },
+        ];
+
+        downloadList.innerHTML = documents
+          .map(
+            (doc) => `
+      <div class="download-card">
+        <h3>${doc.name}</h3>
+        <a href="${doc.file}" download class="btn">Download</a>
+      </div>
+    `
+          )
+          .join("");
+      }
+    </script>
+  </body>
+</html>

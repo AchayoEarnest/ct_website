@@ -148,3 +148,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+document.getElementById("registrationForm")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const name = e.target.querySelector('input[type="text"]').value;
+  const email = e.target.querySelector('input[type="email"]').value;
+  const phone = e.target.querySelector('input[type="tel"]').value;
+  const course = e.target.querySelector("select").value;
+
+  const registeredStudents = JSON.parse(localStorage.getItem("students")) || [];
+  registeredStudents.push({ name, email, phone, course });
+  localStorage.setItem("students", JSON.stringify(registeredStudents));
+
+  alert("Registration successful! You can now access Downloads.");
+  e.target.reset();
+});

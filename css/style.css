@@ -418,3 +418,33 @@ body.dark-mode .btn:hover {
 #mpesaPhone:focus {
   border-color: var(--primary);
 }
+
+.downloads-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.download-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  padding: 40px;
+}
+
+.download-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.download-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.download-card a.btn {
+  display: inline-block;
+  margin-top: 15px;
+}

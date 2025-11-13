@@ -116,13 +116,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const total = savedCart.reduce((sum, item) => sum + item.price, 0);
-    alert(
-      `STK Push simulated: Sending payment request of $${total} to ${phoneNumber}`
-    );
 
-    // Clear cart after simulated payment
-    localStorage.removeItem("cart");
-    updateCartUI();
+    // Simulate STK push
+    const confirmPayment = confirm(
+      `Simulated STK Push: Send payment request of $${total} to ${phoneNumber}?`
+    );
+    if (confirmPayment) {
+      alert("Payment successful! Thank you.");
+      localStorage.removeItem("cart"); // Clear cart after successful payment
+      updateCartUI(); // Show empty cart page
+    } else {
+      alert("Payment cancelled.");
+    }
   };
 
   window.removeFromCart = (id) => {

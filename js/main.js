@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   const courses = [
-    { id: 1, name: "Web Development", price: 100, icon: "fa-laptop-code" },
-    { id: 2, name: "Data Analysis", price: 120, icon: "fa-chart-line" },
-    { id: 3, name: "Cyber Security", price: 150, icon: "fa-shield-alt" },
-    { id: 4, name: "Computer Packages", price: 80, icon: "fa-file-alt" },
-    { id: 5, name: "Music Production", price: 150, icon: "fa-music" },
-    { id: 6, name: "Filming", price: 150, icon: "fa-video" },
+    { id: 1, name: "Web Development", price: 6000, icon: "fa-laptop-code" },
+    { id: 2, name: "Data Analysis", price: 9000, icon: "fa-chart-line" },
+    { id: 3, name: "Cyber Security", price: 12000, icon: "fa-shield-alt" },
+    { id: 4, name: "Computer Packages", price: 4000, icon: "fa-file-alt" },
+    { id: 5, name: "Music Production", price: 9000, icon: "fa-music" },
+    { id: 6, name: "Filming", price: 5000, icon: "fa-video" },
     {
       id: 7,
       name: "Professional Foundations",
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="course-card">
         <i class="fas ${c.icon} course-icon"></i>
         <h3>${c.name}</h3>
-        <p>Price: $${c.price}</p>
+        <p>Price: Kshs${c.price}</p>
         <button onclick="addToCart(${c.id})">Add to Cart</button>
       </div>
     `
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const total = savedCart.reduce((sum, item) => sum + item.price, 0);
     const confirmPayment = confirm(
-      `STK Push simulated: Send $${total} request to ${phoneNumber}?`
+      `STK Push simulated: Send Kshs${total} request to ${phoneNumber}?`
     );
     if (confirmPayment) {
       alert("Payment successful!");
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const total = savedCart.reduce((sum, item) => sum + item.price, 0);
         if (cartTotal) {
           cartTotal.innerHTML = `
-            <h3>Total: $${total}</h3>
+            <h3>Total: Ksh${total}</h3>
             <input type="tel" id="mpesaPhone" placeholder="Enter your phone number" style="padding:10px; width:200px; border-radius:6px; margin:10px 0;">
             <br>
             <button class="mpesa-btn" onclick="payCart()">

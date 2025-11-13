@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cahayo Techlinks | Cart</title>
     <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap"
-      rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -26,7 +22,7 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="courses.html">Courses</a></li>
           <li><a href="account.html">My Account</a></li>
-          <li><a href="cart.html">Cart</a></li>
+          <li><a href="cart.html" class="active">Cart</a></li>
           <li><a href="register.html">Student Registration</a></li>
           <li><a href="contact.html">Contact Us</a></li>
         </ul>
@@ -39,11 +35,12 @@
         🌙
       </button>
     </header>
+
     <section class="page-header">
       <h1>Your Cart</h1>
     </section>
 
-    <section class="cart-container" id="cartItems">
+    <section id="cartItems" class="cart-container">
       <p>Your cart is empty.</p>
     </section>
 
@@ -51,13 +48,12 @@
       class="cart-total"
       id="cartTotal"
       style="text-align: center; margin: 30px 0"
-    >
-      <!-- Total, phone input and pay button will be injected here dynamically -->
-    </section>
+    ></section>
 
     <footer>
       <p>&copy; 2025 Cahayo Techlinks. All rights reserved.</p>
     </footer>
+
     <script src="js/main.js"></script>
   </body>
 </html>

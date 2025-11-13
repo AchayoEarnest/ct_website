@@ -1,72 +1,157 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Cahayo Techlinks loaded.");
 
-  // Sample courses
   const courses = [
-    { id: 1, name: "Web Development", price: 100 },
-    { id: 2, name: "Data Analysis", price: 120 },
-    { id: 3, name: "Cyber Security", price: 150 },
-    { id: 3, name: "Computer Packages", price: 150 },
-    { id: 3, name: "Music Production", price: 150 },
-    { id: 3, name: "Filming", price: 150 },
-    { id: 3, name: "Proffesional Foundations", price: 150 },
+    { id: 1, name: "Web Development", price: 100, icon: "fa-laptop-code" },
+    { id: 2, name: "Data Analysis", price: 120, icon: "fa-chart-line" },
+    { id: 3, name: "Cyber Security", price: 150, icon: "fa-shield-alt" },
+    { id: 4, name: "Computer Packages", price: 80, icon: "fa-file-alt" },
+    { id: 5, name: "Music Production", price: 150, icon: "fa-music" },
+    { id: 6, name: "Filming", price: 150, icon: "fa-video" },
+    {
+      id: 7,
+      name: "Professional Foundations",
+      price: 150,
+      icon: "fa-briefcase",
+    },
+    { id: 8, name: "Graphic Design", price: 150, icon: "fa-image" },
+    { id: 9, name: "Content Creation", price: 150, icon: "fa-pen-nib" },
+    { id: 10, name: "Virtual Assistant", price: 150, icon: "fa-user-tie" },
   ];
 
-  // Show courses
   const courseList = document.getElementById("courseList");
   if (courseList) {
-    courseList.innerHTML = courses.map(c => `
+    courseList.innerHTML = courses
+      .map(
+        (c) => `
       <div class="course-card">
+        <i class="fas ${c.icon} course-icon"></i>
         <h3>${c.name}</h3>
         <p>Price: $${c.price}</p>
         <button onclick="addToCart(${c.id})">Add to Cart</button>
+        <button onclick="payWithMpesa(${c.id})" class="mpesa-btn">
+          <i class="fas fa-money-bill-wave"></i> Pay with MPESA
+        </button>
       </div>
-    `).join("");
+    `
+      )
+      .join("");
   }
 
-  // Cart
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   window.addToCart = (id) => {
-    const course = courses.find(c => c.id === id);
-    if (!cart.find(item => item.id === id)) {
+    const course = courses.find((c) => c.id === id);
+    if (!cart.find((item) => item.id === id)) {
       cart.push(course);
       localStorage.setItem("cart", JSON.stringify(cart));
       alert(`${course.name} added to cart.`);
+      updateCartUI();
     } else {
       alert("This course is already in your cart.");
     }
   };
 
-  // Show cart items
+  window.payWithMpesa = (id) => {
+    const course = courses.find((c) => c.id === id);
+    alert(
+      `STK Push simulated: Please complete MPESA payment for ${course.name} ($${course.price})`
+    );
+    // Later: integrate actual Safaricom API here
+  };
+
   const cartItems = document.getElementById("cartItems");
-  if (cartItems && cart.length > 0) {
-    cartItems.innerHTML = cart.map(item => `
-      <div class="course-card">
-        <h3>${item.name}</h3>
-        <p>$${item.price}</p>
-      </div>
-    `).join("");
+  const cartTotal = document.getElementById("cartTotal");
+
+  function updateCartUI() {
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cartItems) {
+      if (savedCart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+        if (cartTotal) cartTotal.innerHTML = "";
+      } else {
+        cartItems.innerHTML = savedCart
+          .map(
+            (item) => `
+        <div class="course-card">
+          <i class="fas ${item.icon} course-icon"></i>
+          <h3>${item.name}</h3>
+          <p>$${item.price}</p>
+          <button onclick="removeFromCart(${item.id})">Remove</button>
+        </div>
+      `
+          )
+          .join("");
+
+        const total = savedCart.reduce((sum, item) => sum + item.price, 0);
+
+        if (cartTotal) {
+          cartTotal.innerHTML = `
+          <h3>Total: $${total}</h3>
+          <input type="tel" id="mpesaPhone" placeholder="Enter your phone number" style="padding:10px; width:200px; border-radius:6px; margin:10px 0;">
+          <br>
+          <button class="mpesa-btn" onclick="payCart()">
+            <i class="fas fa-money-bill-wave"></i> Pay with MPESA
+          </button>
+        `;
+        }
+      }
+    }
   }
 
-  // Form alerts
-  document.querySelectorAll("form").forEach(form => {
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      alert("Form submitted successfully!");
-      form.reset();
-    });
-  });
-});
+  window.payCart = () => {
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (savedCart.length === 0) {
+      alert("Your cart is empty. Add items to proceed to payment.");
+      return;
+    }
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Cahayo Techlinks loaded.");
+    const phoneInput = document.getElementById("mpesaPhone");
+    const phoneNumber = phoneInput.value.trim();
+
+    if (!phoneNumber.match(/^07\d{8}$/)) {
+      alert("Please enter a valid Kenyan phone number (e.g., 07XXXXXXXX).");
+      phoneInput.focus();
+      return;
+    }
+
+    const total = savedCart.reduce((sum, item) => sum + item.price, 0);
+    alert(
+      `STK Push simulated: Sending payment request of $${total} to ${phoneNumber}`
+    );
+
+    // Clear cart after simulated payment
+    localStorage.removeItem("cart");
+    updateCartUI();
+  };
+
+  window.removeFromCart = (id) => {
+    const index = cart.findIndex((item) => item.id === id);
+    if (index !== -1) {
+      const removed = cart.splice(index, 1)[0];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`${removed.name} removed from cart.`);
+      updateCartUI();
+    }
+  };
+
+  window.payCart = () => {
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const total = savedCart.reduce((sum, item) => sum + item.price, 0);
+    if (total > 0) {
+      alert(
+        `STK Push simulated: Please complete MPESA payment of $${total} for all courses in your cart.`
+      );
+      localStorage.removeItem("cart");
+      updateCartUI();
+    }
+  };
+
+  updateCartUI();
 
   // ---- DARK/LIGHT MODE ----
   const toggle = document.getElementById("themeToggle");
   const currentTheme = localStorage.getItem("theme");
-
-  // Apply saved theme
   if (currentTheme === "dark") {
     document.body.classList.add("dark-mode");
     if (toggle) toggle.textContent = "☀️";
@@ -81,60 +166,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---- COURSE + CART FUNCTIONALITY ----
-  const courses = [
-    { id: 1, name: "Web Development", price: 100 },
-    { id: 2, name: "Data Analysis", price: 120 },
-    { id: 3, name: "Cyber Security", price: 150 },
-    { id: 3, name: "Computer Packages", price: 150 },
-    { id: 3, name: "Music Production", price: 150 },
-    { id: 3, name: "Filming", price: 150 },
-    { id: 3, name: "Proffesional Foundations", price: 150 },
-     { id: 3, name: "Graphic Design", price: 150 },
-    { id: 3, name: "Content Creation", price: 150 },
-    { id: 3, name: "Vistual Assistant", price: 150 },
-  ];
-
-  const courseList = document.getElementById("courseList");
-  if (courseList) {
-    courseList.innerHTML = courses.map(c => `
-      <div class="course-card">
-        <h3>${c.name}</h3>
-        <p>Price: $${c.price}</p>
-        <button onclick="addToCart(${c.id})">Add to Cart</button>
-      </div>
-    `).join("");
-  }
-
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  window.addToCart = (id) => {
-    const course = courses.find(c => c.id === id);
-    if (!cart.find(item => item.id === id)) {
-      cart.push(course);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert(`${course.name} added to cart.`);
-    } else {
-      alert("This course is already in your cart.");
-    }
-  };
-
-  const cartItems = document.getElementById("cartItems");
-  if (cartItems && cart.length > 0) {
-    cartItems.innerHTML = cart.map(item => `
-      <div class="course-card">
-        <h3>${item.name}</h3>
-        <p>$${item.price}</p>
-      </div>
-    `).join("");
-  }
-
-  document.querySelectorAll("form").forEach(form => {
-    form.addEventListener("submit", e => {
+  // Form submission
+  document.querySelectorAll("form").forEach((form) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       alert("Form submitted successfully!");
       form.reset();
     });
   });
 });
-

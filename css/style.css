@@ -273,8 +273,14 @@ body.dark-mode footer {
 
 /* ---------- ANIMATIONS ---------- */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -342,4 +348,73 @@ body.dark-mode .btn {
 body.dark-mode .course-card button:hover,
 body.dark-mode .btn:hover {
   background: linear-gradient(135deg, #00acc1, #64ffda);
+}
+
+/* ---------- COURSE ICONS ---------- */
+.course-icon {
+  font-size: 3em;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+/* ---------- MPESA BUTTON ---------- */
+.mpesa-btn {
+  background: #f5a623;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.mpesa-btn:hover {
+  background: #e6951a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(245, 166, 35, 0.4);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .course-list {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .features {
+    gap: 20px;
+    padding: 50px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.8em;
+  }
+  .course-list {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .course-card {
+    padding: 20px;
+  }
+  .btn,
+  .mpesa-btn {
+    width: 100%;
+  }
+}
+
+#mpesaPhone {
+  padding: 10px;
+  width: 220px;
+  border-radius: 6px;
+  border: 1px solid #d0d7de;
+  margin-bottom: 10px;
+  font-size: 15px;
+  outline: none;
+}
+
+#mpesaPhone:focus {
+  border-color: var(--primary);
 }
